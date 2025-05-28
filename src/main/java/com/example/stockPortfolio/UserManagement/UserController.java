@@ -21,7 +21,7 @@ public class UserController {
 
     //api for login
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest loginRequest){
+    public String login(@Valid @RequestBody LoginRequestDTO loginRequest){
         return userService.login(loginRequest.getEmail(), loginRequest.getPassword());
     }
 
