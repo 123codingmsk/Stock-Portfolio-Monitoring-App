@@ -1,26 +1,18 @@
 package com.example.stockPortfolio.UserManagement;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-//our database model for each user
+//this class is for seperate usage while login for the user
+//like user can only login using email and password, so need of name
 @Data
-@Entity
-public class UserModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    @NotBlank(message = "Name is required!")
-    private String name;
+public class LoginRequestDTO {
     @NotBlank(message = "Email is required!")
     @Pattern(
             regexp = "[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}",
-            message = "Please enter a valid email address, like example@domain.com")
+            message = "Please enter a valid email address, like example@domain.com"
+    )
     private String email;
     @NotBlank(message = "Password required!")
     @Pattern(regexp = "(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{6,}",
