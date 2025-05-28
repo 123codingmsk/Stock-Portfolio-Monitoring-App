@@ -1,5 +1,15 @@
 package com.example.stockPortfolio.HoldingsManagement;
 
-public class HoldingStatusDTO {
+import lombok.Data;
 
+@Data
+public class HoldingStatusDTO {
+    private String symbol;
+    private String companyName;
+    private String sector;
+    private int quantity;
+    private double buyPrice;
+    private double currentPrice;
+    private double gain;
+    private double gainPercentage;
 }
