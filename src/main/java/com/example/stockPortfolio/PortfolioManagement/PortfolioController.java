@@ -1,5 +1,6 @@
 package com.example.stockPortfolio.PortfolioManagement;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/portfolios")
+@Tag(name="2. Portfolio", description = "2nd Controller, After User Register & Login")
 public class PortfolioController {
 
     @Autowired
@@ -19,7 +21,7 @@ public class PortfolioController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{userId}/holdings")
+    @GetMapping("/{userId}")
     public ResponseEntity<PortfolioResponseDTO> getPortfoliosByUserId(@PathVariable Long userId) {
         PortfolioResponseDTO response= portfolioService.getPortfoliosByUserId(userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
