@@ -49,10 +49,8 @@ public class HoldingService {
                 holdingRepo.save(holding);
             }
         }
-
         transactionRepo.save(txn);
     }
-
 
     public HoldingResponseDTO getHoldingsWithDetails(Long userId, Long portfolioId) {
         List<Holding> holdings = holdingRepo.findByUserIdAndPortfolioId(userId, portfolioId);
@@ -121,9 +119,8 @@ public class HoldingService {
                     dto.setGain(gain);
                     dto.setGainPercentage(gainPercentage);
 
-                    // Optional loss fields for clarity
                     if (gain < 0) {
-                        dto.setLoss(-gain); // Convert to positive value
+                        dto.setLoss(-gain);
                         dto.setLossPercentage(-gainPercentage);
                     } else {
                         dto.setLoss(0.0);
@@ -133,6 +130,37 @@ public class HoldingService {
             }
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public void updateHolding(Long id, HoldingUpdateDTO dto) {
+        Holding holding = holdingRepo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Holding not found with id: " + id));
+
+        if (dto.getQuantity() != null) {
+            if (dto.getQuantity() < 0) {
+                throw new IllegalArgumentException("Quantity cannot be negative");
+            }
+            holding.setQuantity(dto.getQuantity());
+        }
+
+        if (dto.getBuyPrice() != null) {
+            if (dto.getBuyPrice() < 0) {
+                throw new IllegalArgumentException("Buy price cannot be negative");
+            }
+            holding.setBuyPrice(dto.getBuyPrice());
+        }
+
+        if (holding.getQuantity() == 0) {
+            holdingRepo.delete(holding);
+        } else {
+            holdingRepo.save(holding);
+        }
+    }
+
+    public void deleteHolding(Long id) {
+        Holding holding = holdingRepo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Holding not found with id: " + id));
+        holdingRepo.delete(holding);
     }
 
 }
