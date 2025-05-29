@@ -18,6 +18,6 @@ public class Portfolio {
     @NotNull(message = "userID is Required!")
     private Long userId;
     @NotBlank(message = "PortfolioName is Required!")
-    @Size(min = 3, message = "Minimum 3 letters required!")
+    @Size(max = 60, message = "Maximum 60 letters!")
     private String portfolioName;
 }

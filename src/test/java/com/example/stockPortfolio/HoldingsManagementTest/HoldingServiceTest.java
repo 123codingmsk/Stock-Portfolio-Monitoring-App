@@ -1,4 +1,4 @@
 package com.example.stockPortfolio.HoldingsManagementTest;
 
-public class HoldingServiceTest {
+public class HoldingServiceTest{
 }
