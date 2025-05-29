@@ -25,4 +25,11 @@ public class Holding{
     private int quantity;
     @DecimalMin(value = "0.01",inclusive = true,message = "Value must be greater than or equal to 0.01")
     private double buyPrice;
+
+    public Holding(long l, long l1, long l2, String aapl, int i, double v) {
+    }
+
+    public Holding() {
+
+    }
 }
