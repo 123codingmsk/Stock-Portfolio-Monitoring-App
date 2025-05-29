@@ -1,11 +1,13 @@
 package com.example.stockPortfolio.UserManagement;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name="1. User", description = "1st Controller")
 public class UserController {
 
     //injecting the service class, methods inside this

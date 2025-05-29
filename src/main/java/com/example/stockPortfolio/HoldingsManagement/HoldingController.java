@@ -1,5 +1,6 @@
 package com.example.stockPortfolio.HoldingsManagement;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/holdings")
+@Tag(name="3. Holding", description = "3rd Controller, User can add Holdings")
 @RequiredArgsConstructor
 public class HoldingController {
 
