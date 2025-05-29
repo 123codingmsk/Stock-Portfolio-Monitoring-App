@@ -1,9 +1,7 @@
 package com.example.stockPortfolio.HoldingsManagementTest;
 
-
 import com.example.stockPortfolio.HoldingsManagement.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,12 +10,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
