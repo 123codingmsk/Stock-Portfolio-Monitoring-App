@@ -26,7 +26,7 @@ class HoldingsControllerTest {
     HoldingController holdingController;
 
     void setUp() {
-        MockitoAnnotations.openMocks(this);  // Initialize mocks and inject all mock objects into our HoldingController instance
+        MockitoAnnotations.openMocks(this); // Initialize mocks and inject all mock objects into our HoldingController instance
     }
 
     @Test
@@ -40,12 +40,17 @@ class HoldingsControllerTest {
         dto.setPrice(100.0);
         dto.setType("BUY");
 
-        // It returns us a body ("msg") and also our status code like (200 Ok)
-        ResponseEntity<String> response = holdingController.recordTransaction(dto);
+// It returns us a body ("msg") and also our status code like (200 Ok)
 
-        //Checking part
+        ResponseEntity <ApiResponse<Transaction>> response = holdingController.recordTransaction(dto);
+
+//Checking part
         Assertions.assertEquals(200 ,response.getStatusCodeValue());
-        Assertions.assertEquals("Transaction recorded and holdings updated.",response.getBody());
+        Assertions.assertEquals(
+                "Transaction recorded and holdings updated",
+                response.getBody().getMessage().replaceAll("\\.$", "")
+        );
+        ;
 
         verify(holdingService, times(1)).processTransaction(any(Transaction.class));
 
@@ -61,13 +66,14 @@ class HoldingsControllerTest {
         dto.setPrice(100.0);
         dto.setType("BUY");
 
-        //Throws the message when our selling transaction processes
+//Throws the message when our selling transaction processes
         Mockito.doThrow(new IllegalArgumentException("Insufficient quantity to sell.")).when(holdingService).processTransaction(any(Transaction.class));
 
-        ResponseEntity<String> response = holdingController.recordTransaction(dto);
+
+        ResponseEntity <ApiResponse<Transaction>> response = holdingController.recordTransaction(dto);
 
         Assertions.assertEquals(400, response.getStatusCodeValue());
-        Assertions.assertEquals("Insufficient quantity to sell.", response.getBody());
+        Assertions.assertEquals("Insufficient quantity to sell.", response.getBody().getMessage());
 
     }
 
@@ -86,10 +92,11 @@ class HoldingsControllerTest {
 
         when(holdingService.getAllTransactions(1l,2l)).thenReturn(List.of(txn));
 
-        ResponseEntity<List<TransactionDTO>> response = holdingController.getTransactions(1l,2l);
+
+        ResponseEntity <ApiResponse<List<TransactionDTO>>> response = holdingController.getTransactions(1l,2l);
         Assertions.assertEquals(200,response.getStatusCodeValue());
         Assertions.assertNotNull(response.getBody());
-        Assertions.assertTrue(response.getBody().size() == 1);
+        Assertions.assertTrue(response.getBody().getResult().size() == 1); // ✅ This is correct
 
     }
     @Test
@@ -99,8 +106,8 @@ class HoldingsControllerTest {
 
         when(holdingService.getHoldingsWithDetails(1l,2l)).thenReturn(dto);
 
-        ResponseEntity<HoldingResponseDTO> response = holdingController.getHoldings(1l,2l);
+        ResponseEntity <ApiResponse<HoldingResponseDTO>> response = holdingController.getHoldings(1l,2l);
         Assertions.assertEquals(200,response.getStatusCodeValue());
-        Assertions.assertEquals("OK",response.getBody().getMessage());
+        Assertions.assertEquals("Holdings fetched successfully", response.getBody().getMessage());
     }
 }
