@@ -4,102 +4,78 @@ import com.example.stockPortfolio.UserManagement.LoginRequestDTO;
 import com.example.stockPortfolio.UserManagement.UserController;
 import com.example.stockPortfolio.UserManagement.UserModel;
 import com.example.stockPortfolio.UserManagement.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+@ExtendWith(MockitoExtension.class)
+class UserControllerTest {
 
-// This annotation sets up the testing environment ONLY for the controller part
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
+    @Mock
+    UserService userService;
 
-    @Autowired
-    private MockMvc  mockMvc; // allows us to "fake" HTTP requests without starting server
+    @InjectMocks
+    UserController userController;
 
-    @MockBean
-    private UserService  userService; // we fake the service so no real DB is used
+    UserModel user;
+    LoginRequestDTO loginRequest;
 
-    @Autowired
-    private ObjectMapper objectMapper; // helps us to convert Java objects to JSON
+    @BeforeEach
+    void setUp() {
+        user = new UserModel();
 
-    //Our main testing starts here
-    @Test
-    void testRegisterUser() throws Exception {
+        user.setName("TCS");
+        user.setEmail("Dev123@gmail.com");
+        user.setPassword("1234");
 
-        // created a sample dummy user
-        UserModel user = new UserModel();
-        user.setName("John Doe");
-        user.setEmail("john@example.com");
-        user.setPassword("pass123");
+        loginRequest = new LoginRequestDTO();
+        loginRequest.setEmail("Deva123@gmail.com");
+        loginRequest.setPassword("01125532553");
 
-        // we mock the behavior of userService
-        Mockito.when(userService.register(any(UserModel.class))).thenReturn(user);
-
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user))) // converting user object to JSON
-                .andExpect(status().isOk()) //displays status as 200 Ok
-                .andExpect(jsonPath("$.name").value("John Doe")) // this is what we expect to get a particular expression
-                .andExpect(jsonPath("$.email").value("john@example.com"));//we expect this value to get back
     }
 
     @Test
-    void testLogin() throws Exception {
-        LoginRequestDTO login = new LoginRequestDTO();
-        login.setEmail("john@example.com");
-        login.setPassword("pass123");
+    void test_register() {
+        Mockito.when(userService.register(user)).thenReturn(user);
 
-        Mockito.when(userService.login("john@example.com", "pass123"))
-                .thenReturn("Login Successful!");
+        UserModel u1= userController.register(user);
 
-        mockMvc.perform(post("/user/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(login)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Login Successful!"));
+        assertEquals("TCD",u1.getName());
+        assertEquals("1234",u1.getPassword());
+        Mockito.verify(userService).register(user);
     }
 
     @Test
-    void testUpdateProfile() throws Exception {
-        String email = "john@example.com";
+    void test_login() {
 
-        UserModel updateData = new UserModel();
-        updateData.setName("Johnny Updated");
-        updateData.setEmail("john.updated@example.com");
-        updateData.setPassword("updated123");
+        Mockito.when(userService.login("Deva123@gmail.com","01125532553")).thenReturn("Login Successful!");
 
-        Mockito.when(userService.editProfile(Mockito.eq(email), any(UserModel.class)))
-                .thenReturn(updateData);
+        //as we are getting string as outcome
+        String result = userController.login(loginRequest); //will return "Success" if executed
 
-        mockMvc.perform(put("/user/updateProfile/" + email)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateData)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Johnny Updated"))
-                .andExpect(jsonPath("$.email").value("john.updated@example.com"));
+        assertEquals("Login Successful!",result);
+        Mockito.verify(userService).login("Deva123@gmail.com","01125532553");
     }
 
+    @Test
+    void update() {
 
-    void test_toCheckUpdate() throws Exception{
-        String email = "john@example.com";
 
-        UserModel updateData = new UserModel();
+        Mockito.when(userService.editProfile("Deva123@gmail.com",user)).thenReturn(user);
 
-        updateData.setName("d");
-        updateData.setEmail("john.updated12@gmail.com");
-        updateData.setPassword("12345");
+        UserModel updatedUser = userController.update("Deva123@gmail.com",user);
 
-        UserModel user ;
-        Mockito.when(userService.editProfile(Mockito.eq(email),any( UserModel.class))).thenReturn(updateData);
+        Assertions.assertNotNull(updatedUser);
+        Assertions.assertEquals("TCS",updatedUser.getName());
+        Assertions.assertEquals("1234", updatedUser.getPassword());
 
+        Mockito.verify(userService).editProfile("Deva123@gmail.com",user);
 
     }
 }

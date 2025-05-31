@@ -18,7 +18,7 @@ public class AlertService {
     @Autowired
     private StockService stockService;
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/59 * * * * *")
     public void checkAndTriggerAlerts() {
         // Get all saved alerts
         List<Alert> alerts = alertRepo.findAll();
