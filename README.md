@@ -128,7 +128,7 @@ Compares current stock price against user-defined conditions.
 | **PriceCache**| `symbol`, `currentPrice`, `timestamp`        |
 
 ---
-
+```
 ## 🗂 Project Structure
 Stock-Portfolio-Monitoring-App/
 ├── src/
@@ -153,6 +153,7 @@ Stock-Portfolio-Monitoring-App/
             └── UserManagementTest/                    # User module tests
 
 ---
+```
 
 ## ▶️ How to Run the Project
 
