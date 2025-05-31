@@ -1,4 +1,4 @@
-package com.example.stockPortfolio;
+	package com.example.stockPortfolio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,5 +11,4 @@ public class StockPortfolioApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StockPortfolioApplication.class, args);
 	}
-
 }
