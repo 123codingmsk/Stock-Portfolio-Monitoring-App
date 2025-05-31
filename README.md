@@ -170,4 +170,34 @@ Stock-Portfolio-Monitoring-App/
    ```bash
    git clone https://github.com/123codingmsk/Stock-Portfolio-Monitoring-App.git
    cd Stock-Portfolio-Monitoring-App
+2. Create MySQL Database:
+    CREATE DATABASE stocksdb;
+3. Edit application.properties
+    # Example DB Config
+    spring.datasource.url=jdbc:mysql://localhost:3306/stocksdb
+    spring.datasource.username=root
+    spring.datasource.password=root
+    
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+    
+    springdoc.api-docs.path=/v3/api-docs
+    springdoc.swagger-ui.path=/swagger-ui.html
+4.  Build and Run the Project
+    ./mvnw clean install
+    ./mvnw spring-boot:run
+5.  Access API Documentation
+    Visit: http://localhost:8080/swagger-ui/index.html
+
+| Name                   | Role & Contributions                     |
+| ---------------------- | ---------------------------------------- |
+| **A. Manoj Sai Kumar** | Project Lead, Contributed to all modules |
+| **Meenakshi Gayatri**  | Contributed to all modules               |
+| **Niladri Sen**        | Contributed to all modules               |
+| **Vibusha**            | Contributed to all modules               |
+| **Devansh Dubey**      | Contributed to all modules               |
+
+
+
 
