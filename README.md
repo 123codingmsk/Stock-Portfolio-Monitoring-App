@@ -124,8 +124,8 @@ Compares current stock price against user-defined conditions.
 | **User**   | `id`, `username`, `email`, `password`            |
 | **Portfolio** | `id`, `userId`, `portfolioName`              |
 | **Holding**   | `id`, `portfolioId`, `symbol`, `quantity`, `buyPrice` |
-| **Alert**     | `id`, `userId`, `symbol`, `threshold`, `isActive`     |
-| **PriceCache**| `symbol`, `currentPrice`, `timestamp`        |
+| **Alert**     | `id`, `userId`, `symbol`, `threshold`     |
+| **StockPrice**| `symbol`, `currentPrice`, `timestamp`        |
 
 ---
 
