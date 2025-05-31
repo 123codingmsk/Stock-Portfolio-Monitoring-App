@@ -70,7 +70,6 @@ Runs on schedule (every 5 minutes)
 ### ✔ Gain/Loss Calculation
 For each holding:
 
-```text
 gain = (currentPrice - buyPrice) * quantity  
 percentageGain = (gain / (buyPrice * quantity)) * 100
 
