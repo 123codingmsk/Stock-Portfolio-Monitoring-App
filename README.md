@@ -73,3 +73,101 @@ For each holding:
 ```text
 gain = (currentPrice - buyPrice) * quantity  
 percentageGain = (gain / (buyPrice * quantity)) * 100
+
+## ✔️ Alert Evaluation
+
+Compares current stock price against user-defined conditions.
+
+- ✅ If triggered: Adds into DB and logs alert to console.
+
+---
+
+## 🧪 Testing Plan
+
+| Type          | Tool           | Focus Areas                                 |
+|---------------|----------------|---------------------------------------------|
+| Unit Testing  | JUnit, Mockito | Controllers, Services, Utils                |
+| Spring Boot   | Built-in       | REST APIs, DB interactions                  |
+| Mock Testing  | Mockito        | External API (stock price) mocks            |
+| Alert Testing | Custom/Unit    | Alert triggers, logging                     |
+
+---
+
+## 📤 Sample API Endpoints
+
+### 🔐 AuthController
+- `POST /user/register` – User registration  
+- `PUT /user/updateProfile/{email}` – Update user profile  
+- `POST /user/login` – User login  
+
+### 📦 PortfolioController
+- `GET /portfolios` – View all portfolios  
+- `POST /portfolios/{userid}` – Create user portfolios  
+- `GET /portfolios/{userid}` – View user portfolio  
+
+### 📈 HoldingsController
+- `POST /api/holdings` – Add new stock  
+- `PUT /api/holdings/{id}` – Update stock info  
+- `DELETE /api/holdings/{id}` – Remove a stock  
+- `GET /api/holdings` – Get all holdings bought by user  
+- `GET /api/holdings/transactions` – Get all user transactions  
+
+### 🔔 AlertsController
+- `POST /api/alerts` – Set up an alert  
+- `GET /api/alerts` – View all alerts  
+
+---
+
+## 🗃 Example Entity Overview
+
+| Entity     | Fields                                           |
+|------------|--------------------------------------------------|
+| **User**   | `id`, `username`, `email`, `password`            |
+| **Portfolio** | `id`, `userId`, `portfolioName`              |
+| **Holding**   | `id`, `portfolioId`, `symbol`, `quantity`, `buyPrice` |
+| **Alert**     | `id`, `userId`, `symbol`, `threshold`, `isActive`     |
+| **PriceCache**| `symbol`, `currentPrice`, `timestamp`        |
+
+---
+
+## 🗂 Project Structure
+Stock-Portfolio-Monitoring-App/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/stockPortfolio/
+│   │   │       ├── StockPortfolioApplication.java       # Main Spring Boot Application
+│   │   │       ├── AlertManagement/                    # Manages stock alerts
+│   │   │       ├── ExceptionManagement/                # Global exception handling
+│   │   │       ├── HoldingsManagement/                 # Stock holdings and transactions
+│   │   │       ├── PortfolioManagement/                # Portfolio management
+│   │   │       └── UserManagement/                     # User operations (auth, registration)
+│   └── resources/
+│       └── application.properties                      # App configuration
+│
+└── test/
+    └── java/
+        └── com/example/stockPortfolio/
+            ├── AlertManagementTest/                   # Alert module tests
+            ├── HoldingsManagementTest/                # Holdings module tests
+            ├── PortfolioManagementTest/               # Portfolio module tests
+            └── UserManagementTest/                    # User module tests
+
+---
+
+## ▶️ How to Run the Project
+
+### 🛠 Prerequisites
+
+- Java 17+  
+- Maven  
+- MySQL  
+- Postman or Swagger UI (for testing)
+
+### 🚀 Setup Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/123codingmsk/Stock-Portfolio-Monitoring-App.git
+   cd Stock-Portfolio-Monitoring-App
+
